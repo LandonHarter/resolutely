@@ -6,7 +6,8 @@ export async function assignDefault(uid: string, firestore: admin.firestore.Fire
         initialized: true,
         goals: [],
         streak: 0,
-        lastDayActive: new Date().toString()
+        lastDayActive: new Date().toString(),
+        achievements: [],
     };
     await firestore.collection("users").doc(uid).update(defaultValues);
 }

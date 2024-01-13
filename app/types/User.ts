@@ -1,3 +1,4 @@
+import { Achievement } from "./Achievements";
 import { Goal } from "./Goal";
 
 export type User = {
@@ -13,4 +14,6 @@ export type User = {
 
     lastDayActive: string;
     streak: number;
+
+    achievements: Achievement[];
 };

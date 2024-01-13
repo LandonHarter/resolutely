@@ -1,6 +1,7 @@
 "use client";
 
 import { syncFirebaseAuth } from "@/backend/client/auth";
+import { AchievementProvider } from "@/context/achievements";
 import { NextUIProvider } from "@nextui-org/react";
 import { Session } from "next-auth";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -23,7 +24,9 @@ export default function Providers({ session, children }: { session?: Session | n
             }} />
             <SessionProvider session={session}>
                 <FirebaseAuthProvider>
-                    {children}
+                    <AchievementProvider>
+                        {children}
+                    </AchievementProvider>
                 </FirebaseAuthProvider>
             </SessionProvider>
         </NextUIProvider>
