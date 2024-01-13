@@ -3,6 +3,7 @@ import { AuthOptions } from "next-auth";
 import * as admin from "firebase-admin";
 import Google from "next-auth/providers/google";
 import { User } from "@/types/User";
+import { assignDefault } from "@/backend/server/auth";
 
 const firebaseAdminCredential = admin.credential.cert({
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -28,7 +29,13 @@ export const authOptions: AuthOptions = {
     callbacks: {
         async session({ session, user }) {
             const firebaseUser = await admin.firestore().collection("users").doc(user.id).get();
-            if (!firebaseUser.exists || !firebaseUser.data()) return session;
+            const userData = firebaseUser.data() as Partial<User> | undefined;
+
+            if (!firebaseUser.exists || !userData) return session;
+
+            if (!userData.initialized) {
+                await assignDefault(user.id, admin.firestore());
+            }
 
             return {
                 ...session,

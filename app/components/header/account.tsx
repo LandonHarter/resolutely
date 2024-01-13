@@ -28,7 +28,7 @@ export default function HeaderAccount({ authState }: { authState: AuthState }) {
         return (
             <Button color="primary" onPress={async () => {
                 await signIn("google");
-            }}>Sign In</Button>
+            }} className="font-medium">Sign In</Button>
         )
     }
 
