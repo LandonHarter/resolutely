@@ -71,11 +71,16 @@ export default function GoalsContent({ user, streak }: { user: User, streak: any
         );
     }
 
+    let sentStreak = false;
     useEffect(() => {
         if (streak.streak >= 365) awardAchievement(user, Achievements.YearStreak, achievementControls);
         else if (streak.streak >= 30) awardAchievement(user, Achievements.MonthStreak, achievementControls);
         else if (streak.streak >= 7) awardAchievement(user, Achievements.WeekStreak, achievementControls);
         else if (streak.streak >= 3) awardAchievement(user, Achievements.ThreeDayStreak, achievementControls);
+
+        if (sentStreak) return;
+        if (streak.failed) { toast.error("You broke your streak! 😢"); sentStreak = true; }
+        else if (streak.newDay) { toast.success("One more day added to the streak! 🎉"); sentStreak = true; }
     }, [streak]);
 
     return (
