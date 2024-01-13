@@ -2,17 +2,18 @@
 
 import { Checkbox, Chip } from "@nextui-org/react";
 import { useContext } from "react";
-import { Filter, FilterContext } from "./context";
+import { FilterContext } from "./context";
 import { User } from "@/types/User";
+import { GoalCategory } from "@/types/Goal";
 
 export default function GoalsSidebar({ user }: { user: User }) {
-    const { filters, setFilters } = useContext(FilterContext);
+    const { filters, setFilters, goals, setGoals } = useContext(FilterContext);
 
-    function ListItem({ name, color, borderColor, id }: { name: string, color: string, borderColor: string, id: Filter }) {
+    function ListItem({ name, color, borderColor, id }: { name: string, color: string, borderColor: string, id: GoalCategory }) {
         const selected = filters.includes(id);
         let numGoals = 0;
 
-        user.goals.forEach(goal => {
+        goals.forEach(goal => {
             if (goal.category === id) numGoals++;
         });
 
@@ -46,7 +47,7 @@ export default function GoalsSidebar({ user }: { user: User }) {
             <ListItem name="Financial" color="bg-emerald-500" borderColor="after:bg-emerald-500" id="financial" />
             <ListItem name="Academic" color="bg-amber-500" borderColor="after:bg-amber-500" id="academic" />
             <ListItem name="Social" color="bg-blue-500" borderColor="after:bg-blue-500" id="social" />
-            <ListItem name="Misc" color="bg-purple-500" borderColor="after:bg-purple-500" id="misc" />
+            <ListItem name="Other" color="bg-purple-500" borderColor="after:bg-purple-500" id="other" />
         </nav>
     );
 }

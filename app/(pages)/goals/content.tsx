@@ -1,15 +1,23 @@
 "use client";
 
-import { useContext } from "react";
-import { Filter, FilterContext } from "./context";
+import { useContext, useState } from "react";
+import { FilterContext } from "./context";
 import { User } from "@/types/User";
 import StreakSVG from "@/svg/streak";
-import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
 import ThreeDotsSVG from "@/svg/threedots";
 import PlusSVG from "@/svg/plus";
+import NewGoal from "./new";
+import { Goal, GoalCategory } from "@/types/Goal";
+import { arrayRemove, collection, doc, updateDoc } from "firebase/firestore";
+import { firestore } from "@/backend/client/firebase";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 export default function GoalsContent({ user }: { user: User }) {
-    const { filters, setFilters } = useContext(FilterContext);
+    const { update } = useSession();
+    const { filters, setFilters, goals, setGoals } = useContext(FilterContext);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     function formatDate() {
         const date = new Date();
@@ -20,13 +28,21 @@ export default function GoalsContent({ user }: { user: User }) {
         return `${day} ${dayNum} ${month} ${year}`;
     }
 
-    function Goal({ name, category, id }: { name: string, category: Filter, id: string }) {
-        if (!filters.includes(category)) return null;
+    function getTimeOfDay() {
+        const date = new Date();
+        const hours = date.getHours();
+        if (hours < 12) return "Morning";
+        if (hours < 18) return "Afternoon";
+        return "Evening";
+    }
+
+    function Goal({ goal }: { goal: Goal }) {
+        if (!filters.includes(goal.category)) return null;
         return (
             <div className="flex justify-between items-center p-4 bg-white rounded-xl mb-2">
                 <div className="flex items-center">
                     <Checkbox size="lg" />
-                    <span className="ml-2 text-lg">{name}</span>
+                    <span className="ml-2 text-lg">{goal.name}</span>
                 </div>
                 <div className="flex items-center">
                     <Dropdown placement="top-end">
@@ -34,7 +50,16 @@ export default function GoalsContent({ user }: { user: User }) {
                             <Button className="bg-transparent hover:bg-gray-200 rounded-xl transition-background" isIconOnly><ThreeDotsSVG className="w-6 h-6" /></Button>
                         </DropdownTrigger>
                         <DropdownMenu>
-                            <DropdownItem color="danger">Delete</DropdownItem>
+                            <DropdownItem color="danger" onPress={async () => {
+                                setGoals(goals.filter(g => g.id !== goal.id));
+                                toast.success("Goal deleted!");
+
+                                const userRef = doc(collection(firestore, "users"), user.id);
+                                await updateDoc(userRef, {
+                                    goals: arrayRemove(goal)
+                                });
+                                await update();
+                            }}>Delete</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </div>
@@ -43,32 +68,46 @@ export default function GoalsContent({ user }: { user: User }) {
     }
 
     return (
-        <main className="absolute left-[350px] h-fit min-h-screen px-16" style={{
-            width: "calc(100vw - 350px)",
-        }}>
-            <div className="mt-[42px] mb-12 flex justify-between w-full">
-                <div className="flex flex-col">
-                    <h1 className="text-3xl font-semibold mb-2">Good Morning, {user.name}! 👋</h1>
-                    <p className="text-gray-500 text-lg">Today, {formatDate()}</p>
-                </div>
-                <div className="flex items-center">
-                    <StreakSVG className="w-10 h-10 mr-2" />
-                    <p className="font-medium text-3xl">{user.streak}</p>
-                </div>
-            </div>
-            <div className="w-full flex flex-col">
-                <div className="w-full flex justify-end mb-2">
-                    <Button color="primary" className="font-medium text-lg px-5" startContent={<PlusSVG className="w-5 h-5" pathClassName="stroke-white" />}>New</Button>
-                </div>
-                {user.goals.map((goal, i) => {
-                    return <Goal key={i} name={goal.name} category={goal.category} id={goal.id} />;
-                })}
-                {user.goals.length === 0 && (
-                    <div className="w-full flex justify-center items-center bg-white rounded-xl p-4">
-                        <p className="text-lg text-gray-500">No goals yet!</p>
+        <>
+            <main className="absolute left-[350px] h-fit min-h-screen px-16" style={{
+                width: "calc(100vw - 350px)",
+            }}>
+                <div className="mt-[42px] mb-12 flex justify-between w-full">
+                    <div className="flex flex-col">
+                        <h1 className="text-3xl font-semibold mb-2">Good {getTimeOfDay()}, {user.name}! 👋</h1>
+                        <p className="text-gray-500 text-lg">Today, {formatDate()}</p>
                     </div>
-                )}
-            </div>
-        </main>
+                    <div className="flex items-center">
+                        <StreakSVG className="w-10 h-10 mr-2" />
+                        <p className="font-medium text-3xl">{user.streak}</p>
+                    </div>
+                </div>
+                <div className="w-full flex flex-col">
+                    <div className="w-full flex justify-end mb-2">
+                        <Button color="primary" className="font-medium text-lg px-5" startContent={<PlusSVG className="w-5 h-5" pathClassName="stroke-white" />} onPress={onOpen}>New</Button>
+                    </div>
+                    {goals.map((goal, i) => {
+                        return <Goal key={i} goal={goal} />;
+                    })}
+                    {goals.length === 0 && (
+                        <div className="w-full flex justify-center items-center bg-white rounded-xl p-4">
+                            <p className="text-lg text-gray-500">No goals yet!</p>
+                        </div>
+                    )}
+                </div>
+            </main>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
+                <ModalContent className="flex flex-col items-center p-6">
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="text-4xl font-medium">New Goal</ModalHeader>
+                            <ModalBody className="w-full flex flex-col items-center">
+                                <NewGoal user={user} onClose={onClose} />
+                            </ModalBody>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     );
 }

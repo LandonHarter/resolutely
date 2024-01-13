@@ -16,7 +16,7 @@ export default async function GoalsPage() {
 
     return (
         <main className="w-screen h-screen flex bg-[#F5F4F5]">
-            <FilterProvider>
+            <FilterProvider user={user}>
                 <GoalsSidebar user={user} />
                 <GoalsContent user={user} />
             </FilterProvider>
