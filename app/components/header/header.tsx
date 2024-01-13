@@ -8,7 +8,7 @@ export default async function Header() {
     const authState = await useAuthState();
 
     return (
-        <header className="w-screen flex justify-center py-2 bg-[hsl(var(--nextui-background))]">
+        <header className="w-screen flex justify-center py-2 ">
             <Navbar classNames={{
                 base: "bg-[hsl(var(--nextui-background))]",
                 content: "bg-[hsl(var(--nextui-background))]",

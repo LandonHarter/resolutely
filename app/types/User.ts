@@ -7,6 +7,7 @@ export type User = {
     emailVerified: boolean | null;
     image: string;
     id: string;
+    joinedAt: string;
 
     initialized: boolean; // because we are not using a SQL or typed database, we must track if we have initialized the users fields with a default value
 
