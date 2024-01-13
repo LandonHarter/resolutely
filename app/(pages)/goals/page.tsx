@@ -16,7 +16,6 @@ export default async function GoalsPage() {
 
     return (
         <main className="w-screen h-screen flex bg-[#F5F4F5]">
-            <StreakHandler streak={streak} />
             <FilterProvider>
                 <GoalsSidebar />
                 <GoalsContent user={user} />
