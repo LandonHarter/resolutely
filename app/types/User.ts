@@ -12,6 +12,7 @@ export type User = {
     initialized: boolean; // because we are not using a SQL or typed database, we must track if we have initialized the users fields with a default value
 
     goals: Goal[];
+    goalsCreated: number;
 
     lastDayActive: string;
     streak: number;

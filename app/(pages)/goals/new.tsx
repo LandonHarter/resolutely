@@ -9,6 +9,9 @@ import { useSession } from "next-auth/react";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
 import { FilterContext } from "./context";
+import { awardAchievement } from "@/utils/achievements";
+import { Achievements } from "@/types/Achievements";
+import { useAchievement } from "@/context/achievements";
 
 export default function NewGoal({ user, onClose }: { user: User, onClose: () => void }) {
     const { update } = useSession();
@@ -20,6 +23,7 @@ export default function NewGoal({ user, onClose }: { user: User, onClose: () => 
     const [loading, setLoading] = useState(false);
 
     const { setGoals } = useContext(FilterContext);
+    const achievementControls = useAchievement();
 
     function GoalType({ title, id, type, children }: { title: string, id: GoalCategory | GoalTimeFrame, type: "category" | "timeframe", children: React.ReactNode }) {
         let selected = false;
@@ -108,10 +112,14 @@ export default function NewGoal({ user, onClose }: { user: User, onClose: () => 
                     }
 
                     setLoading(true);
-                    const goal = await createGoal(user, category as GoalCategory, timeframe as GoalTimeFrame, name);
+                    const { goal, goalsCreated } = await createGoal(user, category as GoalCategory, timeframe as GoalTimeFrame, name);
                     setGoals(goals => [...goals, goal]);
                     await update();
                     toast.success("Goal created!");
+
+                    if (goalsCreated >= 50) await awardAchievement(user, Achievements.GoalMaster, achievementControls);
+                    else if (goalsCreated >= 10) await awardAchievement(user, Achievements.GoalMaker, achievementControls);
+                    else if (goalsCreated >= 1) await awardAchievement(user, Achievements.GoalSetter, achievementControls);
 
                     setCategory("");
                     setTimeframe("");

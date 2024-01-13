@@ -6,6 +6,7 @@ export async function assignDefault(uid: string, firestore: admin.firestore.Fire
         initialized: true,
         joinedAt: new Date().toString(),
         goals: [],
+        goalsCreated: 0,
         streak: 0,
         lastDayActive: new Date().toString(),
         achievements: [],

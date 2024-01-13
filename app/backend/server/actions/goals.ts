@@ -3,7 +3,7 @@
 import { Goal, GoalCategory, GoalTimeFrame } from "@/types/Goal";
 import { User } from "@/types/User";
 import { generateId } from "@/utils/id";
-import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, collection, doc, increment, updateDoc } from "firebase/firestore";
 import { firestore } from "@/backend/client/firebase";
 
 export async function createGoal(user: User, category: GoalCategory, timespan: GoalTimeFrame, name: string) {
@@ -18,8 +18,12 @@ export async function createGoal(user: User, category: GoalCategory, timespan: G
 
     const userRef = doc(collection(firestore, "users"), user.id);
     await updateDoc(userRef, {
-        goals: arrayUnion(goal)
+        goals: arrayUnion(goal),
+        goalsCreated: increment(1)
     });
 
-    return goal;
+    return {
+        goal,
+        goalsCreated: user.goalsCreated + 1
+    };
 }
