@@ -3,19 +3,25 @@
 import { Checkbox, Chip } from "@nextui-org/react";
 import { useContext } from "react";
 import { Filter, FilterContext } from "./context";
+import { User } from "@/types/User";
 
-export default function GoalsSidebar() {
+export default function GoalsSidebar({ user }: { user: User }) {
     const { filters, setFilters } = useContext(FilterContext);
 
-    function ListItem({ name, id }: { name: string, id: Filter }) {
+    function ListItem({ name, color, borderColor, id }: { name: string, color: string, borderColor: string, id: Filter }) {
         const selected = filters.includes(id);
+        let numGoals = 0;
+
+        user.goals.forEach(goal => {
+            if (goal.category === id) numGoals++;
+        });
 
         return (
             <div className="w-full flex items-center justify-between py-4">
                 <div className="flex items-center">
                     <Checkbox classNames={{
-                        icon: "bg-red-500",
-                        wrapper: "after:bg-red-500"
+                        icon: color,
+                        wrapper: borderColor
                     }} isSelected={selected} size="lg" onChange={() => {
                         if (selected) {
                             setFilters(filters.filter(filter => filter !== id));
@@ -25,7 +31,7 @@ export default function GoalsSidebar() {
                     }} />
                     <span className="ml-2 text-lg">{name}</span>
                 </div>
-                <Chip className="px-4">0</Chip>
+                <Chip className="px-4">{numGoals}</Chip>
             </div>
         );
     }
@@ -35,8 +41,12 @@ export default function GoalsSidebar() {
             height: "calc(100vh - 20px)"
         }}>
             <h1 className="text-3xl font-medium mt-4 mb-4">Filters</h1>
-            <ListItem name="Diet" id="diet" />
-            <ListItem name="Fitness" id="fitness" />
+            <ListItem name="Health" color="bg-red-500" borderColor="after:bg-red-500" id="health" />
+            <ListItem name="Reading" color="bg-sky-500" borderColor="after:bg-sky-500" id="reading" />
+            <ListItem name="Financial" color="bg-emerald-500" borderColor="after:bg-emerald-500" id="financial" />
+            <ListItem name="Academic" color="bg-amber-500" borderColor="after:bg-amber-500" id="academic" />
+            <ListItem name="Social" color="bg-blue-500" borderColor="after:bg-blue-500" id="social" />
+            <ListItem name="Misc" color="bg-purple-500" borderColor="after:bg-purple-500" id="misc" />
         </nav>
     );
 }

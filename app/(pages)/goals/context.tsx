@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-export type Filter = "fitness" | "diet" | "reading" | "meditation" | "music" | "art" | "other";
+export type Filter = "health" | "reading" | "financial" | "academic" | "social" | "misc";
 export const FilterContext = createContext<{
     filters: Filter[],
     setFilters: React.Dispatch<React.SetStateAction<Filter[]>>
@@ -11,7 +11,7 @@ export const FilterContext = createContext<{
     setFilters: () => { },
 });
 export function FilterProvider({ children }: { children: React.ReactNode }) {
-    const [filters, setFilters] = useState<Filter[]>(["fitness", "diet", "reading", "meditation", "music", "art", "other"]);
+    const [filters, setFilters] = useState<Filter[]>(["health", "reading", "financial", "academic", "social", "misc"]);
 
     return (
         <FilterContext.Provider value={{
