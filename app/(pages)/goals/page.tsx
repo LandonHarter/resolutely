@@ -12,13 +12,13 @@ export const metadata = createMetadata({
 export default async function GoalsPage() {
     const { user, signedIn } = await useAuthState();
     if (!signedIn) redirect("/");
-    const streak = await checkStreaks(user);
+    const { streak } = await checkStreaks(user);
 
     return (
         <main className="w-screen h-screen flex bg-[#F5F4F5]">
             <FilterProvider user={user}>
                 <GoalsSidebar user={user} />
-                <GoalsContent user={user} />
+                <GoalsContent user={user} streak={streak} />
             </FilterProvider>
         </main>
     );

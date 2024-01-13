@@ -8,13 +8,13 @@ import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger
 import ThreeDotsSVG from "@/svg/threedots";
 import PlusSVG from "@/svg/plus";
 import NewGoal from "./new";
-import { Goal, GoalCategory } from "@/types/Goal";
+import { Goal } from "@/types/Goal";
 import { arrayRemove, collection, doc, updateDoc } from "firebase/firestore";
 import { firestore } from "@/backend/client/firebase";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 
-export default function GoalsContent({ user }: { user: User }) {
+export default function GoalsContent({ user, streak }: { user: User, streak: number }) {
     const { update } = useSession();
     const { filters, setFilters, goals, setGoals } = useContext(FilterContext);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -79,7 +79,7 @@ export default function GoalsContent({ user }: { user: User }) {
                     </div>
                     <div className="flex items-center">
                         <StreakSVG className="w-10 h-10 mr-2" />
-                        <p className="font-medium text-3xl">{user.streak}</p>
+                        <p className="font-medium text-3xl">{streak}</p>
                     </div>
                 </div>
                 <div className="w-full flex flex-col">

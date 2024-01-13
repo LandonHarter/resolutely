@@ -39,6 +39,7 @@ export const authOptions: AuthOptions = {
 
             return {
                 ...session,
+                firebaseToken: await admin.auth().createCustomToken(user.id),
                 user: {
                     ...firebaseUser.data() as Partial<User>,
                     id: user.id

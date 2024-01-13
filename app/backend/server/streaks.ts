@@ -10,11 +10,14 @@ export async function checkStreaks(user: User) {
     let newStreak = {
         newDay: false,
         failed: false
-    }
+    };
+    let streak = user.streak;
     if (date.getDate() - lastDayActive.getDate() === 1) {
         newStreak.newDay = true;
+        streak++;
     } else if (date.getDate() - lastDayActive.getDate() > 1) {
         newStreak.failed = true;
+        streak = 0;
     }
 
     if (newStreak.newDay || newStreak.failed) {
@@ -24,5 +27,8 @@ export async function checkStreaks(user: User) {
         });
     }
 
-    return newStreak;
+    return {
+        ...newStreak,
+        streak
+    };
 }

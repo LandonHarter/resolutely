@@ -20,10 +20,9 @@ export default async function Header() {
                     </Link>
                 </NavbarBrand>
                 <NavbarContent justify="center" className="gap-16">
-                    <Link href="/"><NavbarItem className="font-semibold text-xl">Page1</NavbarItem></Link>
-                    <Link href="/"><NavbarItem className="font-semibold text-xl">Page2</NavbarItem></Link>
-                    <Link href="/"><NavbarItem className="font-semibold text-xl">Page3</NavbarItem></Link>
-                    <Link href="/"><NavbarItem className="font-semibold text-xl">Page4</NavbarItem></Link>
+                    <Link href="/resources"><NavbarItem className="font-semibold text-xl">Resources</NavbarItem></Link>
+                    <Link href="/motivation"><NavbarItem className="font-semibold text-xl">Motivation</NavbarItem></Link>
+                    <Link href="/community"><NavbarItem className="font-semibold text-xl">Community</NavbarItem></Link>
                 </NavbarContent>
                 <NavbarContent justify="end">
                     <HeaderAccount authState={authState} />
