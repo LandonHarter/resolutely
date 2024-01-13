@@ -1,7 +1,8 @@
 "use client";
 
 import { Achievement } from "@/types/Achievements";
-import { Button, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { createContext, useContext, useState } from "react";
@@ -18,6 +19,7 @@ const AchievementContext = createContext<{
     openModal: () => { },
 });
 export function AchievementProvider({ children }: { children: React.ReactNode }) {
+    const { data: session } = useSession();
     const [achievement, setAchievement] = useState<Achievement | null>(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { width, height } = useWindowSize();
@@ -34,7 +36,7 @@ export function AchievementProvider({ children }: { children: React.ReactNode })
                             <>
                                 <ModalHeader className="w-full flex items-center justify-between">
                                     <h1>New Achievement</h1>
-                                    <Link href="/achievements"><Button color="primary" variant="light" className="font-medium text-[hsl(var(--resolutely-primary-600))]" onPress={() => {
+                                    <Link href={"/" + session?.user.id + "/achievements"}><Button color="primary" variant="light" className="font-medium text-[hsl(var(--resolutely-primary-600))]" onPress={() => {
                                         onClose();
                                     }}>VIEW ALL</Button></Link>
                                 </ModalHeader>
@@ -45,15 +47,14 @@ export function AchievementProvider({ children }: { children: React.ReactNode })
                                         <p className="text-gray-500">{achievement.description}</p>
                                     </div>
                                 </ModalBody>
+                                <ModalFooter>
+
+                                </ModalFooter>
                             </>
                         );
                     }}
                 </ModalContent>
-                {isOpen &&
-                    <>
-                        <Confetti width={width} height={height} />
-                    </>
-                }
+                <Confetti width={width} height={height} run={isOpen} />
             </Modal>
         </AchievementContext.Provider>
     );
