@@ -14,7 +14,7 @@ export default async function CommunityPage() {
     const posts = await getCommunityPosts();
 
     return (
-        <main className="w-full flex flex-col items-center py-[80px]">
+        <main className="w-full flex flex-col items-center gap-8 py-[80px]">
             {posts.map((post, i) => {
                 return (
                     <Link key={i} href={"/" + post.author.id + "/achievements"}>

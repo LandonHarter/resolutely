@@ -12,6 +12,15 @@ import { FilterContext } from "./context";
 import { awardAchievement } from "@/utils/achievements";
 import { Achievements } from "@/types/Achievements";
 import { useAchievement } from "@/context/achievements";
+import HealthSVG from "@/svg/health";
+import BookSVG from "@/svg/book";
+import MoneySVG from "@/svg/money";
+import StudentSVG from "@/svg/student";
+import PeopleSVG from "@/svg/people";
+import BlocksSVG from "@/svg/blocks";
+import DailySVG from "@/svg/daily";
+import MonthlySVG from "@/svg/monthly";
+import WeeklySVG from "@/svg/weekly";
 
 export default function NewGoal({ user, onClose }: { user: User, onClose: () => void }) {
     const { update } = useSession();
@@ -31,7 +40,7 @@ export default function NewGoal({ user, onClose }: { user: User, onClose: () => 
         if (type === "timeframe" && timeframe === id) selected = true;
 
         return (
-            <div className={"flex flex-col items-center justify-center border-2 p-6 rounded-xl cursor-pointer hover:bg-gray-100 transition-all " + (selected ? "border-[hsl(var(--resolutely-primary))]" : "border-gray-300")} onClick={() => {
+            <div className={"flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer transition-all " + (selected ? "border-[hsl(var(--resolutely-primary))] border-4 bg-[hsl(var(--resolutely-primary-100))] hover:" : "border-gray-300 border-2 hover:bg-gray-100")} onClick={() => {
                 if (type === "category") setCategory(id as GoalCategory);
                 if (type === "timeframe") setTimeframe(id as GoalTimeFrame);
             }}>
@@ -46,22 +55,22 @@ export default function NewGoal({ user, onClose }: { user: User, onClose: () => 
             <>
                 <div className="grid grid-cols-3 grid-rows-2 gap-4">
                     <GoalType title="Health" type="category" id="health">
-                        <StreakSVG className="w-12 h-12" />
+                        <HealthSVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Reading" type="category" id="reading">
-                        <StreakSVG className="w-12 h-12" />
+                        <BookSVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Financial" type="category" id="financial">
-                        <StreakSVG className="w-12 h-12" />
+                        <MoneySVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Academic" type="category" id="academic">
-                        <StreakSVG className="w-12 h-12" />
+                        <StudentSVG className="w-12 h-12" pathClassName="fill-none stroke-2 stroke-black" />
                     </GoalType>
                     <GoalType title="Social" type="category" id="social">
-                        <StreakSVG className="w-12 h-12" />
+                        <PeopleSVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Other" type="category" id="other">
-                        <StreakSVG className="w-12 h-12" />
+                        <BlocksSVG className="w-12 h-12" />
                     </GoalType>
                 </div>
                 <Button color="primary" onPress={() => {
@@ -81,13 +90,13 @@ export default function NewGoal({ user, onClose }: { user: User, onClose: () => 
             <>
                 <div className="grid grid-cols-3 gap-4">
                     <GoalType title="Daily" type="timeframe" id="daily">
-                        <StreakSVG className="w-12 h-12" />
+                        <DailySVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Weekly" type="timeframe" id="weekly">
-                        <StreakSVG className="w-12 h-12" />
+                        <WeeklySVG className="w-12 h-12" />
                     </GoalType>
                     <GoalType title="Monthly+" type="timeframe" id="monthly+">
-                        <StreakSVG className="w-12 h-12" />
+                        <MonthlySVG className="w-14 h-14" pathClassName="stroke-1 fill-none stroke-black" />
                     </GoalType>
                 </div>
                 <Button color="primary" onPress={() => {
