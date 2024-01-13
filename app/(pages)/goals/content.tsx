@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "./context";
 import { User } from "@/types/User";
 import StreakSVG from "@/svg/streak";
@@ -13,11 +13,15 @@ import { arrayRemove, collection, doc, updateDoc } from "firebase/firestore";
 import { firestore } from "@/backend/client/firebase";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { awardAchievement } from "@/utils/achievements";
+import { Achievements } from "@/types/Achievements";
+import { useAchievement } from "@/context/achievements";
 
-export default function GoalsContent({ user, streak }: { user: User, streak: number }) {
+export default function GoalsContent({ user, streak }: { user: User, streak: any }) {
     const { update } = useSession();
     const { filters, setFilters, goals, setGoals } = useContext(FilterContext);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const achievementControls = useAchievement();
 
     function formatDate() {
         const date = new Date();
@@ -67,6 +71,13 @@ export default function GoalsContent({ user, streak }: { user: User, streak: num
         );
     }
 
+    useEffect(() => {
+        if (streak.streak >= 365) awardAchievement(user, Achievements.YearStreak, achievementControls);
+        else if (streak.streak >= 30) awardAchievement(user, Achievements.MonthStreak, achievementControls);
+        else if (streak.streak >= 7) awardAchievement(user, Achievements.WeekStreak, achievementControls);
+        else if (streak.streak >= 3) awardAchievement(user, Achievements.ThreeDayStreak, achievementControls);
+    }, [streak]);
+
     return (
         <>
             <main className="absolute left-[350px] h-fit min-h-screen px-16" style={{
@@ -79,7 +90,7 @@ export default function GoalsContent({ user, streak }: { user: User, streak: num
                     </div>
                     <div className="flex items-center">
                         <StreakSVG className="w-10 h-10 mr-2" />
-                        <p className="font-medium text-3xl">{streak}</p>
+                        <p className="font-medium text-3xl">{streak.streak}</p>
                     </div>
                 </div>
                 <div className="w-full flex flex-col">
