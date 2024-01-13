@@ -24,6 +24,7 @@ export function AchievementProvider({ children }: { children: React.ReactNode })
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { width, height } = useWindowSize();
 
+
     return (
         <AchievementContext.Provider value={{ achievement, setAchievement, openModal: onOpen }}>
             {children}
@@ -40,15 +41,25 @@ export function AchievementProvider({ children }: { children: React.ReactNode })
                                         onClose();
                                     }}>VIEW ALL</Button></Link>
                                 </ModalHeader>
-                                <ModalBody className="flex flex-row mb-4">
+                                <ModalBody className="flex flex-row">
                                     <Image src={"/images/achievements/" + achievement.id + ".svg"} alt={achievement.name} width={85} height={85} />
                                     <div className="flex flex-col ml-2">
                                         <h1 className="text-2xl font-medium">{achievement.name}</h1>
                                         <p className="text-gray-500">{achievement.description}</p>
                                     </div>
                                 </ModalBody>
-                                <ModalFooter>
-
+                                <ModalFooter className="w-full flex flex-col">
+                                    <span className="font-medium text-lg">Share to</span>
+                                    <div className="flex justify-start items-center gap-2">
+                                        <Link href={"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fresolutely.vercel.app%2F" + session?.user.id + "%2Fachievements" + "&quote=I%20just%20unlocked%20a%20new%20achievement%20on%20Resolutely!%20Check%20it%20out!"} target="_blank">
+                                            <Button isIconOnly className="rounded-full bg-[#1976D2]">
+                                                <Image src="/images/platforms/facebook.png" alt="facebook" width={32} height={32} className="translate-x-[-3px] translate-y-[-1px]" />
+                                            </Button>
+                                        </Link>
+                                        <Button isIconOnly className="rounded-full bg-white border-2 border-gray-200">
+                                            <Image src="/images/company/icon-transparent.png" alt="resolutely" width={32} height={32} />
+                                        </Button>
+                                    </div>
                                 </ModalFooter>
                             </>
                         );
