@@ -1,7 +1,12 @@
 import YoutubePlayer from "./video";
-
+import { createMetadata } from "@/utils/metadata";
 const youtubesearchapi = require("youtube-search-api");
 
+
+export const metadata = createMetadata({
+    title: "Motivation | Resolutely",
+    description: "Get motivated with a motivational quote and video.",
+});
 export default async function MotivationPage() {
     const quoteRequest = await fetch("https://quotenjoke.onrender.com/quote", {
         method: "GET",

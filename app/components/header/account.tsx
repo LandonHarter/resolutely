@@ -16,6 +16,12 @@ export default function HeaderAccount({ authState }: { authState: AuthState }) {
                     <Avatar src={authState.user.image} showFallback className="cursor-pointer transition-all" />
                 </DropdownTrigger>
                 <DropdownMenu>
+                    <DropdownSection showDivider>
+                        <DropdownItem key="profile" className="h-14 gap-2">
+                            <p className="">Hello,</p>
+                            <p className="font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{authState.user.name}</p>
+                        </DropdownItem>
+                    </DropdownSection>
                     <DropdownItem href="/goals" startContent={<GoalsSVG className="w-5 h-5 ml-[2px] mr-[2px]" pathClassName="stroke-[0.01px] stroke-black" />}>Your Goals</DropdownItem>
                     <DropdownItem href={"/" + authState.user.id + "/achievements"} startContent={<TrophySVG className="w-[22px] h-[22px] ml-[2px] mr-[1px]" />}>Achievements</DropdownItem>
                     <DropdownItem color="danger" className="group" startContent={<SignOutSVG className="w-6 h-6 mr-[3px]" pathClassName="fill-none stroke-2 stroke-red-500 transition-all group-hover:stroke-white" />} onPress={() => {

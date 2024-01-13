@@ -36,7 +36,13 @@ export default async function AchievementsPage(context: { params: { uid: string 
                     {user.achievements.map((achievement, i) => {
                         return <AchievementBadge key={i} achievement={achievement} />;
                     })}
+
                 </div>
+                {user.achievements.length === 0 &&
+                    <div className="w-screen h-[400px] flex flex-col items-center justify-center absolute top-[500px]">
+                        <h1 className="text-gray-500 text-3xl font-semibold">No achievements yet.</h1>
+                    </div>
+                }
             </main>
         </>
     );
