@@ -1,0 +1,19 @@
+<svg width="605" height="605" viewBox="0 0 605 605" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_i_30_28)">
+<circle cx="302.5" cy="302.5" r="302.5" fill="#D9BBEB"/>
+</g>
+<path d="M364.667 271.417L404.714 247.388C417.041 239.992 423.204 236.294 428.276 236.767C432.697 237.179 436.732 239.463 439.36 243.043C442.375 247.148 442.375 254.336 442.375 268.711V336.289C442.375 350.664 442.375 357.852 439.36 361.958C436.732 365.537 432.697 367.822 428.276 368.233C423.204 368.706 417.041 365.009 404.714 357.612L364.667 333.583M212.358 395.75H314.933C332.342 395.75 341.046 395.75 347.695 392.362C353.543 389.383 358.299 384.627 361.279 378.779C364.667 372.13 364.667 363.425 364.667 346.017V258.983C364.667 241.575 364.667 232.871 361.279 226.222C358.299 220.373 353.543 215.618 347.695 212.638C341.046 209.25 332.342 209.25 314.933 209.25H212.358C194.95 209.25 186.246 209.25 179.597 212.638C173.748 215.618 168.993 220.373 166.013 226.222C162.625 232.871 162.625 241.575 162.625 258.983V346.017C162.625 363.425 162.625 372.13 166.013 378.779C168.993 384.627 173.748 389.383 179.597 392.362C186.246 395.75 194.95 395.75 212.358 395.75Z" stroke="#4D027A" stroke-width="37" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<filter id="filter0_i_30_28" x="0" y="0" width="605" height="605" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="27" operator="erode" in="SourceAlpha" result="effect1_innerShadow_30_28"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="27.25"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.752471 0 0 0 0 0.592157 0 0 0 0 0.878431 0 0 0 1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_30_28"/>
+</filter>
+</defs>
+</svg>
