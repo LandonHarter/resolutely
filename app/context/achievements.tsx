@@ -56,9 +56,11 @@ export function AchievementProvider({ children }: { children: React.ReactNode })
                                                 <Image src="/images/platforms/facebook.png" alt="facebook" width={32} height={32} className="translate-x-[-3px] translate-y-[-1px]" />
                                             </Button>
                                         </Link>
-                                        <Button isIconOnly className="rounded-full bg-white border-2 border-gray-200">
-                                            <Image src="/images/company/icon-transparent.png" alt="resolutely" width={32} height={32} />
-                                        </Button>
+                                        <Link href={"/community?name='" + achievement.name + "'&desc='" + achievement.description + "'&id=" + achievement.id}>
+                                            <Button isIconOnly className="rounded-full bg-white border-2 border-gray-200">
+                                                <Image src="/images/company/icon-transparent.png" alt="resolutely" width={32} height={32} />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </ModalFooter>
                             </>
