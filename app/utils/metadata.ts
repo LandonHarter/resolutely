@@ -44,7 +44,7 @@ export function createMetadata(props: MetadataProps = {}): Metadata {
             siteName: "Resolutely",
             images: [
                 {
-                    url: process.env.NEXT_PUBLIC_BASE_URL + "/images/company/logo.png"
+                    url: process.env.NEXT_PUBLIC_BASE_URL + "/images/company/icon.png"
                 }
             ]
         },
@@ -55,7 +55,7 @@ export function createMetadata(props: MetadataProps = {}): Metadata {
             description: props.description ?? BaseDescription,
             images: [
                 {
-                    url: process.env.NEXT_PUBLIC_BASE_URL + "/images/company/logo.png",
+                    url: process.env.NEXT_PUBLIC_BASE_URL + "/images/company/icon.png",
                 }
             ]
         },
