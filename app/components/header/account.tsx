@@ -37,7 +37,9 @@ export default function HeaderAccount({ authState }: { authState: AuthState }) {
     function signedOutUI() {
         return (
             <Button color="primary" onPress={async () => {
-                await signIn("google");
+                await signIn("google", {
+                    callbackUrl: "/goals"
+                });
             }} className="font-medium">Sign In</Button>
         )
     }

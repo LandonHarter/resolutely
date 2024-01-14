@@ -11,7 +11,7 @@ export const metadata = createMetadata({
 export default function ResourcesPage() {
     function Category({ name, numResources, id }: { name: string, numResources: number, id: string }) {
         return (
-            <Link href={"/resources/" + id} className="flex p-4 border-2 border-gray-200 rounded-xl">
+            <Link href="/resources" className="flex p-4 border-2 border-gray-200 rounded-xl">
                 <Image src={"/images/categories/" + id + ".svg"} alt={name} width={60} height={60} className="rounded-full mr-4" />
                 <div className="flex flex-col">
                     <h1 className="text-xl font-medium">{name}</h1>
@@ -36,13 +36,13 @@ export default function ResourcesPage() {
             <div className="max-w-[1200px] w-[80vw] flex flex-col">
                 <h1 className="text-3xl font-semibold mb-4">Categories</h1>
                 <div className="w-full grid grid-cols-4 grid-rows-2 gap-4">
-                    <Category name="Books" numResources={12} id="books" />
-                    <Category name="Videos" numResources={12} id="videos" />
-                    <Category name="Articles" numResources={12} id="articles" />
-                    <Category name="Workout Plans" numResources={12} id="workout" />
-                    <Category name="Habits" numResources={12} id="habits" />
-                    <Category name="Diet Plans" numResources={12} id="diet" />
-                    <Category name="Goals" numResources={12} id="goals" />
+                    <Category name="Books" numResources={84} id="books" />
+                    <Category name="Videos" numResources={46} id="videos" />
+                    <Category name="Articles" numResources={25} id="articles" />
+                    <Category name="Workout Plans" numResources={13} id="workout" />
+                    <Category name="Habits" numResources={30} id="habits" />
+                    <Category name="Diet Plans" numResources={7} id="diet" />
+                    <Category name="Goals" numResources={80} id="goals" />
                     <Link href="/resources" className="flex p-4 border-2 border-gray-200 rounded-xl">
                         <Image src="/images/categories/more.svg" alt="other" width={60} height={60} className="rounded-full mr-4" />
                         <div className="flex flex-col">
